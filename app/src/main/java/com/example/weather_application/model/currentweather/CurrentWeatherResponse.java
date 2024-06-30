@@ -1,6 +1,6 @@
 package com.example.weather_application.model.currentweather;
 
-import com.example.weather_application.model.common.Cloud;
+import com.example.weather_application.model.common.Clouds;
 import com.example.weather_application.model.common.Coord;
 import com.example.weather_application.model.common.WeatherItem;
 import com.example.weather_application.model.common.Wind;
@@ -29,7 +29,7 @@ public class CurrentWeatherResponse {
   private Main main;
 
   @SerializedName("cloud")
-  private Cloud cloud;
+  private Clouds clouds;
 
   @SerializedName("id")
   private int id;
@@ -91,12 +91,12 @@ public class CurrentWeatherResponse {
     this.main = main;
   }
 
-  public Cloud getCloud() {
-    return cloud;
+  public Clouds getClouds() {
+    return clouds;
   }
 
-  public void setCloud(Cloud cloud) {
-    this.cloud = cloud;
+  public void setClouds(Clouds clouds) {
+    this.clouds = clouds;
   }
 
   public int getId() {

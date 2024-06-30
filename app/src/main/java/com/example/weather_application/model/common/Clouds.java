@@ -2,7 +2,7 @@ package com.example.weather_application.model.common;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Cloud {
+public class Clouds {
 
   @SerializedName("all")
   private int all;

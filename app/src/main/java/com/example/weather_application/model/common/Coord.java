@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class Coord {
 
   @SerializedName("lon")
-  private double lon;
+  private double lon; //longtitute
 
   @SerializedName("lat")
-  private double lat;
+  private double lat; //latitute
 
   public double getLon() {
     return lon;
