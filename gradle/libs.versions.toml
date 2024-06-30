@@ -1,6 +1,5 @@
 [versions]
 agp = "8.4.1"
-objectbox = "4.0.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -9,9 +8,22 @@ material = "1.12.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
 #gson = "2.11.0"
+materialsearchviewVersion = "1.6.0"
+prefserVersion = "v2.2.1-rx2"
 retrofit = "2.9.0"
-rxjava = "3.1.8"
-rxandroid = "3.0.2"
+logginng-interceptor = "5.0.0-alpha.2"
+rxjava = "2.2.21"
+rxandroid = "2.1.1"
+fastAdapter = "3.3.1"
+glide = "4.12.0"
+lottie = "4.2.0"
+materialSearchView = "1.6.0"
+prefser = "v2.2.1-rx2"
+mp-android-chat = "3.1.0"
+view-pump = "2.0.3"
+calli-graphy-3 = "3.1.1"
+swiperefreshlayout = "1.1.0"
+adapter-rxjava = "2.9.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -20,12 +32,23 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+swipere-fresh-layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 #gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 convert-json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
-rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
+loggining-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logginng-interceptor" }
+rxjava = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxjava" }
+rxandroid = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxandroid" }
+fast-adapter = { group = "com.mikepenz", name = "fastadapter", version.ref = "fastAdapter" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+material-search-view = { group = "com.github.bkhezry", name = "MaterialSearchView", version.ref = "materialSearchView" }
+prefser = { group = "com.github.bkhezry", name = "prefser", version.ref = "prefser" }
+mp-android-chart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mp-android-chat" }
+view-pump = { group = "io.github.inflationx", name = "viewpump", version.ref = "view-pump" }
+calli-graphy = { group = "io.github.inflationx", name = "calligraphy3", version.ref = "calli-graphy-3" }
+adapter-rxjava = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "adapter-rxjava" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
