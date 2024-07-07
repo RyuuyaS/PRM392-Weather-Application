@@ -52,6 +52,7 @@ dependencies {
     implementation libs.prefser
     implementation libs.swipere.fresh.layout
     implementation libs.adapter.rxjava
+    implementation libs.play.service.location
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
