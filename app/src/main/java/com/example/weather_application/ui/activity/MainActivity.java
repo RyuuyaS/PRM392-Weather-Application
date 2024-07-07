@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.example.weather_application.R;
 import com.example.weather_application.databinding.ActivityMainBinding;
+import com.example.weather_application.helper.DBHelper;
 import com.example.weather_application.model.CityInfo;
 import com.example.weather_application.model.currentweather.CurrentWeatherResponse;
 import com.example.weather_application.model.daysweather.ListItem;
@@ -86,6 +88,7 @@ public class MainActivity extends BaseActivity {
     private int[] colors;
     private int[] colorsAlpha;
     private int PERMISSION_REQUEST_CODE = 10001;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class MainActivity extends BaseActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbarLayout.toolbar);
+        dbHelper = new DBHelper(this);
         initSearchView();
         initValues();
         setupTextSwitchers();
@@ -184,6 +188,20 @@ public class MainActivity extends BaseActivity {
                     Intent intent = new Intent(MainActivity.this, HourlyActivity.class);
                     intent.putExtra(Constants.FIVE_DAY_WEATHER_ITEM, todayFiveDayWeather);
                     startActivity(intent);
+                }
+            }
+        });
+        binding.fabShowWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
+                if (cityInfo != null) {
+                    long id = dbHelper.addFavoriteCity(cityInfo.getName());
+                    if (id != -1) {
+                        Toast.makeText(MainActivity.this, "City added to favorites", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "City already exists in favorites", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -281,11 +299,10 @@ public class MainActivity extends BaseActivity {
         } else {
             showEmptyLayout();
         }
-
     }
 
 
-    private void requestWeather(String cityName, boolean isSearch) {
+    public void requestWeather(String cityName, boolean isSearch) {
         if (AppUtil.isNetworkConnected()) {
             getCurrentWeather(cityName, isSearch);
             getFiveDaysWeather(cityName);

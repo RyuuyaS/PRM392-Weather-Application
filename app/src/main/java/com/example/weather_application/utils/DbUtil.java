@@ -1,16 +1,28 @@
 package com.example.weather_application.utils;
 
+import com.example.weather_application.model.CityInfo;
 import com.example.weather_application.model.db.CurrentWeather;
 import com.example.weather_application.model.db.FiveDayWeather;
 import com.example.weather_application.model.db.ItemHourlyDB;
 import com.example.weather_application.model.db.ItemHourlyDB_;
 import com.example.weather_application.model.db.MultipleDaysWeather;
 
+import java.util.List;
+
 import io.objectbox.Box;
 import io.objectbox.query.Query;
 
 public class DbUtil {
 
+  /**
+   * Get a query for retrieving all favorite cities stored in the database.
+   *
+   * @param cityInfoBox ObjectBox BoxStore instance
+   * @return Query<List<CityInfo>> to fetch all favorite cities
+   */
+  public static Query<CityInfo> getFavCities(Box<CityInfo> cityInfoBox) {
+    return cityInfoBox.query().build();
+  }
 
   /**
    * Get query of currentWeatherBox

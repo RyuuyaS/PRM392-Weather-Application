@@ -76,6 +76,12 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/night_mode_label" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_favorite_cities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large" />
+
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nested_scroll_view"
                 android:layout_width="match_parent"
@@ -170,6 +176,7 @@
 
 
                     </LinearLayout>
+
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
