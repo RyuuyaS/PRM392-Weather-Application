@@ -65,6 +65,8 @@ public class HourlyActivity extends BaseActivity {
       }
     });
   }
+    @Override
+    public void onRequestPermisisonsResult(int requestCode, @NonNull String[] permisisons, @NonNull int[] grantResults) {
 
   private void setVariables() {
     Intent intent = getIntent();
