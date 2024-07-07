@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_middle"
                     android:gravity="center"
-                    android:text="@string/persian_label"
+                    android:text="@string/vietnamese_label"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/grey_10" />
 
