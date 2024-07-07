@@ -1,10 +1,24 @@
 package com.example.weather_application.ui.activity;
 
+import static android.content.ContentValues.TAG;
+
+import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+
+import com.google.android.gms.location.LocationRequest;
+
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +26,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -40,12 +55,21 @@ import com.example.weather_application.utils.MyApplication;
 import com.example.weather_application.utils.SnackbarUtil;
 import com.example.weather_application.utils.TextViewFactory;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -86,6 +110,14 @@ public class MainActivity extends BaseActivity {
     private int[] colors;
     private int[] colorsAlpha;
     private int PERMISSION_REQUEST_CODE = 10001;
+    private int LOCATION_REQUEST_CODE = 10002;
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
+    private static final String TAG = "LOCATION";
+
+    private static String locationString;
+    private static boolean isEmptyLayout = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +125,8 @@ public class MainActivity extends BaseActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbarLayout.toolbar);
+        locationString = null;
+        setupLocationPermission();
         initSearchView();
         initValues();
         setupTextSwitchers();
@@ -104,6 +138,35 @@ public class MainActivity extends BaseActivity {
             if (!shouldShowRequestPermissionRationale("112")) {
                 getNotificationPermission();
             }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void setupLocationPermission() {
+        LocationRequest locationRequest = new LocationRequest.Builder(PRIORITY_HIGH_ACCURACY)
+                .setWaitForAccurateLocation(false)
+                .setMinUpdateIntervalMillis(2000)
+                .setMaxUpdateDelayMillis(100)
+                .build();
+
+        LocationCallback locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+            }
+        };
+
+        checkLocationPermission();
+        LocationServices.getFusedLocationProviderClient(getApplicationContext()).requestLocationUpdates(locationRequest, locationCallback, null);
+    }
+
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            getLastLocation();
+        } else {
+            askLocationPermission();
         }
     }
 
@@ -150,16 +213,25 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onRefresh() {
-                cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
-                if (cityInfo != null) {
-                    long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
-                    if (AppUtil.isTimePass(lastStored)) {
-                        requestWeather(cityInfo.getName(), false);
+                getLastLocation();
+                if (locationString != null) {
+                    requestWeather(locationString, false);
+                    if (isEmptyLayout) {
+                        showStoredCurrentWeather();
+                        showStoredFiveDayWeather();
+                    }
+                } else {
+                    cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
+                    if (cityInfo != null) {
+                        long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
+                        if (AppUtil.isTimePass(lastStored)) {
+                            requestWeather(cityInfo.getName(), false);
+                        } else {
+                            binding.swipeContainer.setRefreshing(false);
+                        }
                     } else {
                         binding.swipeContainer.setRefreshing(false);
                     }
-                } else {
-                    binding.swipeContainer.setRefreshing(false);
                 }
             }
 
@@ -267,21 +339,87 @@ public class MainActivity extends BaseActivity {
     }
 
     private void checkLastUpdate() {
-        cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
-        if (cityInfo != null) {
-            binding.toolbarLayout.cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
-            if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
-                long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
-                if (AppUtil.isTimePass(lastStored)) {
+        getLastLocation();
+        if (locationString != null) {
+            requestWeather(cityInfo.getName(), false);
+            if (isEmptyLayout) {
+                showStoredCurrentWeather();
+                showStoredFiveDayWeather();
+            }
+        } else {
+            cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
+            if (cityInfo != null) {
+                binding.toolbarLayout.cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+                if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
+                    long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
+                    if (AppUtil.isTimePass(lastStored)) {
+                        requestWeather(cityInfo.getName(), false);
+                    }
+                } else {
                     requestWeather(cityInfo.getName(), false);
                 }
             } else {
-                requestWeather(cityInfo.getName(), false);
+                showEmptyLayout();
             }
-        } else {
-            showEmptyLayout();
         }
+    }
 
+    private void getLastLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        @SuppressLint("MissingPermission") Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    // Have location
+                    Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    try {
+                        Address address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
+                        Log.d(TAG, address.getCountryName());
+                        locationString = address.getCountryName();
+                        Log.d(TAG, "Location String value " + locationString);
+                    } catch (IOException e) {
+                        Log.d(TAG, "Can't geocode");
+                    }
+                } else {
+                    Log.d(TAG, "LOCATION: null");
+                }
+            }
+        });
+        locationTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "LOCATION: " + "ERROR");
+            }
+        });
+    }
+
+    private void askLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an alert dialog here
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        LOCATION_REQUEST_CODE);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        LOCATION_REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermisisonsResult(int requestCode, @NonNull String[] permisisons, @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_REQUEST_CODE) {
+            return;
+        }
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getLastLocation();
+        } else {
+        }
     }
 
 
@@ -383,6 +521,7 @@ public class MainActivity extends BaseActivity {
         Glide.with(MainActivity.this).load(R.drawable.no_city).into(binding.contentEmptyLayout.noCityImageView);
         binding.contentEmptyLayout.emptyLayout.setVisibility(View.VISIBLE);
         binding.contentMainLayout.nestedScrollView.setVisibility(View.GONE);
+
     }
 
     private void hideEmptyLayout() {
