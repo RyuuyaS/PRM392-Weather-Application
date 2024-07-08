@@ -62,4 +62,21 @@ public interface ApiService {
             @Query("cnt") int dayCount,
             @Query("appid") String appId
     );
+
+    /**
+     *  Reverse geocoding
+     *
+     * @param lat       Latitude
+     * @param lon       Longitude
+     * @param limit     Number of the location names in the API response
+     * @param appId String api key
+     * @return instance of {@link MultipleDaysWeatherResponse}
+     */
+    @GET("reverse")
+    Single<String> getLocationName(
+            @Query("lat") double lat,
+            @Query("lon") double lon,
+            @Query("limit") int limit,
+            @Query("appid") String appId
+    );
 }

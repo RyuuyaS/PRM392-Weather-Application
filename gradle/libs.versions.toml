@@ -24,6 +24,7 @@ view-pump = "2.0.3"
 calli-graphy-3 = "3.1.1"
 swiperefreshlayout = "1.1.0"
 adapter-rxjava = "2.9.0"
+play-service-location = "21.3.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -49,6 +50,7 @@ mp-android-chart = { group = "com.github.PhilJay", name = "MPAndroidChart", vers
 view-pump = { group = "io.github.inflationx", name = "viewpump", version.ref = "view-pump" }
 calli-graphy = { group = "io.github.inflationx", name = "calligraphy3", version.ref = "calli-graphy-3" }
 adapter-rxjava = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "adapter-rxjava" }
+play-service-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "play-service-location" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
