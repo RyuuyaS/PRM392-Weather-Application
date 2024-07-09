@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +15,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weather_application.R;
+import com.example.weather_application.adapters.FavoriteCitiesAdapter;
 import com.example.weather_application.databinding.FragmentAboutBinding;
+import com.example.weather_application.helper.DBHelper;
 import com.example.weather_application.ui.activity.MainActivity;
 import com.example.weather_application.utils.AppUtil;
 import com.example.weather_application.utils.LocaleManager;
@@ -27,19 +34,26 @@ import com.example.weather_application.utils.MyApplication;
 import com.example.weather_application.utils.SharedPreferencesUtil;
 import com.example.weather_application.utils.ViewAnimation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AboutFragment extends DialogFragment {
 
   private Activity activity;
   private String currentLanguage;
   private FragmentAboutBinding binding;
+  private DBHelper dbHelper;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     binding = FragmentAboutBinding.inflate(inflater, container, false);
     View view = binding.getRoot();
+    dbHelper = new DBHelper(requireContext());
+
     initVariables(view);
+
     return view;
   }
 
@@ -119,6 +133,44 @@ public class AboutFragment extends DialogFragment {
         toggleView();
       }
     });
+    displayAllFavoriteCities(view);
+  }
+
+  private void displayAllFavoriteCities(View view) {
+    // Ensure dbHelper is initialized
+    if (dbHelper == null) {
+      dbHelper = new DBHelper(requireContext());
+    }
+
+    Cursor cursor = dbHelper.getAllFavoriteCities();
+    if (cursor != null) {
+      try {
+        List<String> favoriteCities = new ArrayList<>();
+        int cityNameIndex = cursor.getColumnIndex("cityName");
+        while (cursor.moveToNext()) {
+          if (cityNameIndex != -1) {
+            String cityName = cursor.getString(cityNameIndex);
+            favoriteCities.add(cityName);
+          } else {
+            Log.e("AboutFragment", "'cityName' column not found in cursor");
+          }
+        }
+
+        if (!favoriteCities.isEmpty()) {
+          // Update RecyclerView adapter
+          RecyclerView recyclerView = view.findViewById(R.id.recycler_view_favorite_cities);
+          recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+          FavoriteCitiesAdapter adapter = new FavoriteCitiesAdapter(favoriteCities, activity);
+          recyclerView.setAdapter(adapter);
+        } else {
+          Toast.makeText(activity, "No favorite cities saved yet.", Toast.LENGTH_SHORT).show();
+        }
+      } finally {
+        cursor.close();
+      }
+    } else {
+      Toast.makeText(activity, "Cursor is null.", Toast.LENGTH_SHORT).show();
+    }
   }
 
   private void toggleView() {

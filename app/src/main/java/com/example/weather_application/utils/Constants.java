@@ -78,6 +78,7 @@ public class Constants {
 
 
   public static final String CITY_INFO = "city-info";
+  public static final String FAVORITE_CITIES = "fav-city";
 
   public static final long TIME_TO_PASS = 6 * 600000;
 
