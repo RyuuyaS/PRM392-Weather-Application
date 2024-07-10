@@ -208,62 +208,63 @@ public class AppUtil {
    * @return String weather status
    */
   public static String getWeatherStatus(int weatherCode, boolean isRTL) {
+    String currentLanguage = MyApplication.localeManager.getLanguage();
     if (weatherCode / 100 == 2) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[0];
       } else {
         return Constants.WEATHER_STATUS[0];
       }
     } else if (weatherCode / 100 == 3) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[1];
       } else {
         return Constants.WEATHER_STATUS[1];
       }
     } else if (weatherCode / 100 == 5) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[2];
       } else {
         return Constants.WEATHER_STATUS[2];
       }
     } else if (weatherCode / 100 == 6) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[3];
       } else {
         return Constants.WEATHER_STATUS[3];
       }
     } else if (weatherCode / 100 == 7) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[4];
       } else {
         return Constants.WEATHER_STATUS[4];
       }
     } else if (weatherCode == 800) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[5];
       } else {
         return Constants.WEATHER_STATUS[5];
       }
     } else if (weatherCode == 801) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[6];
       } else {
         return Constants.WEATHER_STATUS[6];
       }
     } else if (weatherCode == 803) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[7];
       } else {
         return Constants.WEATHER_STATUS[7];
       }
     } else if (weatherCode / 100 == 8) {
-      if (isRTL) {
+      if (isRTL || currentLanguage.equals("vi")) {
         return Constants.WEATHER_STATUS_PERSIAN[8];
       } else {
         return Constants.WEATHER_STATUS[8];
       }
     }
-    if (isRTL) {
+    if (isRTL || currentLanguage.equals("vi")) {
       return Constants.WEATHER_STATUS_PERSIAN[4];
     } else {
       return Constants.WEATHER_STATUS[4];

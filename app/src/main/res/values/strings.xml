@@ -86,7 +86,7 @@
     <string name="get_api_key_label">Get API Key</string>
     <string name="api_key_label">API Key</string>
     <string name="english_label" translatable="false">English</string>
-    <string name="vietnamese_label" translatable="false">Tiếng Việt</string>
+    <string name="vietnamese_label" translatable="false">Vietnamese</string>
     <string name="search_label">Search</string>
     <string name="no_internet_message">Please check internet connection</string>
     <string name="no_city_found_message">No city found with this name</string>
@@ -95,4 +95,7 @@
     <string name="retry_label">Retry</string>
     <string name="ok_label">OK</string>
     <string name="night_mode_label">Night Mode</string>
+    <string name="city_added_to_favorites">City added to favorites</string>
+    <string name="city_existed_in_favorites">City already exists in favorites</string>
+    <string name="remove_favorite_city">REMOVE</string>
 </resources>

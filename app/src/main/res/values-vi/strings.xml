@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">Thời tiết</string>
+    <string name="cancel_label">Hủy</string>
+    <string name="store_label">Lưu</string>
+    <string name="license_title">Giấy phép</string>
+    <string name="libraries_title">Thư viện &amp; Tài nguyên</string>
+    <string name="developer_info_title">Thông tin nhà phát triển</string>
+    <string name="design_api_title">Thiết kế &amp; API</string>
+    <string name="application_info_title">Thông tin ứng dụng</string>
+    <string name="application_info_text">
+        <![CDATA[
+            <p>
+            <b>Ứng dụng thời tiết</b>
+            <br/>
+            Phiên bản: %1$s
+            <br/>
+            Ứng dụng này là mã nguồn mở tại <br/><a href="https://github.com/RyuuyaS/PRM392-Weather-Application">PRM392-Weather-Application Repo</a></p>
+        ]]>
+    </string>
+    <string name="developer_info_text" translatable="false">
+        <![CDATA[
+            <p>Nguyễn Phùng Thịnh <a href="https://github.com/RyuuyaS">@RyuuyaS</a></p>
+            <p>Triệu Thạch Ân <a href="https://github.com/blueweidy123">@blueweidy123</a></p>
+            <p>Hoàng Mai Phương <a href="https://github.com/maiphuonghoang">@maiphuonghoang</a></p>
+            <p>Phạm Trường Giang <a href="https://github.com/nocolor06">@nocolor06</a></p>
+            <p>Nguyễn Thị Khánh Huyền <a href="https://github.com/hoenntk68">@hoenntk68</a></p>
+        ]]>
+    </string>
+    <string name="design_api_text" translatable="false">
+        <![CDATA[
+            <p>
+            <a href="https://www.uplabs.com/posts/weather-app-freebie">Weather App Freebie</a> của Raman Yv
+            <br/>
+            <a href="https://lottiefiles.com/user/26177">Lottie & Icon files</a> của jochang
+            <br/>
+            <a href="http://openweathermap.org/">OpenWeatherMap</a> Weather API
+            </p>
+        ]]>
+    </string>
+    <string name="license_text" translatable="false">
+        <![CDATA[
+            <p>@Bản quyền 2024 Nhóm 4 - SE1709-NET</p>
+        ]]>
+    </string>
+    <string name="libraries_text" translatable="false">
+        <![CDATA[
+           <p>
+            <a href="https://github.com/JakeWharton/butterknife">ButterKnife</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/square/retrofit">Retrofit</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/objectbox/objectbox-java">ObjectBox</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/mikepenz/FastAdapter">FastAdapter</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/bumptech/glide">Glide</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/airbnb/lottie-android">Lottie-Android</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/MiguelCatalan/MaterialSearchView">MaterialSearchView</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/pwittchen/prefser">Prefser</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/InflationX/Calligraphy">Calligraphy</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/google/material-design-icons">Biểu tượng thiết kế vật liệu</a> - Giấy phép Attribution 4.0 Quốc tế của Creative Common
+           </p>
+        ]]>
+</string>
+    <string name="current_label">Hiện tại</string>
+    <string name="humidity_label">Độ ẩm</string>
+    <string name="wind_label">Gió</string>
+    <string name="next_4_days_hourly">4 ngày tiếp theo/Giờ</string>
+    <string name="next_15_days_label">15 ngày tiếp theo</string>
+    <string name="search_for_a_city_label">Tìm kiếm thành phố</string>
+    <string name="zero_label">0%d</string>
+    <string name="wind_unit_label">%.0f km/giờ</string>
+    <string name="openweathermap_api_key_label">Khóa API của OpenWeatherMap</string>
+    <string name="api_key_description">Để sử dụng ứng dụng, bạn cần cung cấp khóa API. Nó miễn phí.
+        Vui lòng mở liên kết dưới đây và tạo tài khoản. Sau đó, bạn có thể lấy khóa API.</string>
+    <string name="get_api_key_label">Nhận khóa API</string>
+    <string name="api_key_label">Khóa API</string>
+    <string name="english_label" translatable="false">Tiếng Anh</string>
+    <string name="vietnamese_label" translatable="false">Tiếng Việt</string>
+    <string name="search_label">Tìm kiếm</string>
+    <string name="no_internet_message">Vui lòng kiểm tra kết nối internet</string>
+    <string name="no_city_found_message">Không tìm thấy thành phố với tên này</string>
+    <string name="invalid_api_key_message">Khóa API không hợp lệ. Chờ bản cập nhật tiếp theo</string>
+    <string name="network_exception_message">Lỗi kết nối mạng</string>
+    <string name="retry_label">Thử lại</string>
+    <string name="ok_label">OK</string>
+    <string name="night_mode_label">Chế độ ban đêm</string>
+    <string name="city_added_to_favorites">Thành phố đã được thêm vào danh sách yêu thích</string>
+    <string name="city_existed_in_favorites">Thành phố đã tồn tại trong danh sách yêu thích</string>
+    <string name="remove_favorite_city">Xóa</string>
+</resources>

@@ -14,6 +14,7 @@ import com.example.weather_application.R;
 import com.example.weather_application.databinding.WeatherDayItemBinding;
 import com.example.weather_application.utils.AppUtil;
 import com.example.weather_application.utils.Constants;
+import com.example.weather_application.utils.MyApplication;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
@@ -157,7 +158,8 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
       };
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
-      if (AppUtil.isRTL(context)) {
+      String currentLanguage = MyApplication.localeManager.getLanguage();
+      if (AppUtil.isRTL(context) || currentLanguage.equals("vi")) {
         binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
       } else {
         binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);

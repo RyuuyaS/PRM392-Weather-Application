@@ -28,27 +28,27 @@ public class Constants {
   };
 
   public static final String[] DAYS_OF_WEEK_PERSIAN = {
-      "یکشنبه",
-      "دوشنبه",
-      "سه‌شنبه",
-      "چهارشنبه",
-      "پنج‌شنبه",
-      "جمعه",
-      "شنبه"
+        "Chủ Nhật",
+        "Thứ Hai",
+        "Thứ Ba",
+        "Thứ Tư",
+        "Thứ Năm",
+        "Thứ Sáu",
+        "Thứ Bảy"
   };
   public static final String[] MONTH_NAME_PERSIAN = {
-      "فروردین",
-      "اردیبهشت",
-      "خرداد",
-      "تیر",
-      "مرداد",
-      "شهریور",
-      "مهر",
-      "آبان",
-      "آذر",
-      "دی",
-      "بهمن",
-      "اسفند"
+        "Tháng Một",
+        "Tháng Hai",
+        "Tháng Ba",
+        "Tháng Tư",
+        "Tháng Năm",
+        "Tháng Sáu",
+        "Tháng Bảy",
+        "Tháng Tám",
+        "Tháng Chín",
+        "Tháng Mười",
+        "Tháng Mười Một",
+        "Tháng Mười Hai"
   };
 
   public static final String[] WEATHER_STATUS = {
@@ -64,16 +64,15 @@ public class Constants {
   };
 
   public static final String[] WEATHER_STATUS_PERSIAN = {
-      "رعد و برق",
-      "نمنم باران",
-      "باران",
-      "برف",
-      "جو ناپایدار",
-      "صاف",
-      "کمی ابری",
-      "ابرهای پراکنده",
-      "ابری"
-
+        "Giông bão",
+        "Mưa phùn",
+        "Mưa",
+        "Tuyết",
+        "Không khí",
+        "Quang đãng",
+        "Ít mây",
+        "Mây rải rác",
+        "Mây"
   };
 
 

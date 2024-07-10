@@ -270,9 +270,9 @@ public class MainActivity extends BaseActivity {
                 if (cityInfo != null) {
                     long id = dbHelper.addFavoriteCity(cityInfo.getName());
                     if (id != -1) {
-                        Toast.makeText(MainActivity.this, "City added to favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.city_added_to_favorites), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MainActivity.this, "City already exists in favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.city_existed_in_favorites), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
