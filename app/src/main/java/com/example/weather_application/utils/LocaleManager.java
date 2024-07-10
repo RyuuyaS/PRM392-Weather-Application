@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class LocaleManager {
   public static final String LANGUAGE_ENGLISH = "en";
-  public static final String LANGUAGE_PERSIAN = "fa";
+  public static final String LANGUAGE_PERSIAN = "vi";
   private final SharedPreferences prefs;
 
   LocaleManager(Context context) {

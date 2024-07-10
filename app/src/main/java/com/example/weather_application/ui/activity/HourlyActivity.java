@@ -79,7 +79,8 @@ public class HourlyActivity extends BaseActivity {
         binding.cardView.setCardBackgroundColor(fiveDayWeather.getColor());
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTimeInMillis(fiveDayWeather.getDt() * 1000L);
-        if (AppUtil.isRTL(this)) {
+        String currentLanguage = MyApplication.localeManager.getLanguage();
+        if (AppUtil.isRTL(this) || currentLanguage.equals("vi")) {
             binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
         } else {
             binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);

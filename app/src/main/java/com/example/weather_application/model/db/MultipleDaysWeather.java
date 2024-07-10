@@ -10,6 +10,7 @@ import com.example.weather_application.databinding.MultipleDaysItemBinding;
 import com.example.weather_application.utils.AppUtil;
 import com.example.weather_application.utils.Constants;
 import com.example.weather_application.utils.DateConverter;
+import com.example.weather_application.utils.MyApplication;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
@@ -102,6 +103,7 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
         public void bindView(@NonNull MultipleDaysWeather item, @NonNull List<Object> payloads) {
             Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
             calendar.setTimeInMillis(item.getDt() * 1000L);
+            String currentLanguage = MyApplication.localeManager.getLanguage();
             if (AppUtil.isRTL(context)) {
                 DateConverter converter = new DateConverter(
                         calendar.get(Calendar.YEAR),
@@ -110,6 +112,10 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
                 binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
                 binding.dateTextView.setText(String.format(Locale.getDefault(), "%d %s", converter.getIranianDay()
                         , Constants.MONTH_NAME_PERSIAN[converter.getIranianMonth() - 1]));
+            } else if (currentLanguage.equals("vi")) {
+                    binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+                    binding.dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
+                            Constants.MONTH_NAME_PERSIAN[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
             } else {
                 binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
                 binding.dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
