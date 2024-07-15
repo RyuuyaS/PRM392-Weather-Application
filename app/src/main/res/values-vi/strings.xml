@@ -79,17 +79,17 @@
     <string name="search_for_a_city_label">Tìm kiếm thành phố</string>
     <string name="zero_label">0%d</string>
     <string name="wind_unit_label">%.0f km/giờ</string>
-    <string name="openweathermap_api_key_label">Khóa API của OpenWeatherMap</string>
-    <string name="api_key_description">Để sử dụng ứng dụng, bạn cần cung cấp khóa API. Nó miễn phí.
-        Vui lòng mở liên kết dưới đây và tạo tài khoản. Sau đó, bạn có thể lấy khóa API.</string>
-    <string name="get_api_key_label">Nhận khóa API</string>
+    <string name="openweathermap_api_key_label">API Key của OpenWeatherMap</string>
+    <string name="api_key_description">Để sử dụng ứng dụng, bạn cần cung cấp API key. Nó miễn phí.
+        Vui lòng mở liên kết dưới đây và tạo tài khoản. Sau đó, bạn có thể lấy API key.</string>
+    <string name="get_api_key_label">Nhận API key</string>
     <string name="api_key_label">Khóa API</string>
     <string name="english_label" translatable="false">Tiếng Anh</string>
     <string name="vietnamese_label" translatable="false">Tiếng Việt</string>
     <string name="search_label">Tìm kiếm</string>
-    <string name="no_internet_message">Vui lòng kiểm tra kết nối internet</string>
+    <string name="no_internet_message">Vui lòng kiểm tra kết nối Internet</string>
     <string name="no_city_found_message">Không tìm thấy thành phố với tên này</string>
-    <string name="invalid_api_key_message">Khóa API không hợp lệ. Chờ bản cập nhật tiếp theo</string>
+    <string name="invalid_api_key_message">API key không hợp lệ. Chờ bản cập nhật tiếp theo</string>
     <string name="network_exception_message">Lỗi kết nối mạng</string>
     <string name="retry_label">Thử lại</string>
     <string name="ok_label">OK</string>
