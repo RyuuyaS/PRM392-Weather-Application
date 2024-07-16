@@ -3,7 +3,7 @@ package com.example.weather_application.service;
 
 import com.example.weather_application.model.currentweather.CurrentWeatherResponse;
 import com.example.weather_application.model.daysweather.MultipleDaysWeatherResponse;
-import com.example.weather_application.model.fourdayweather.FourDayResponse;
+import com.example.weather_application.model.fivedayweather.FiveDayResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -35,10 +35,10 @@ public interface ApiService {
      * @param units String units of response
      * @param lang  String language of response
      * @param appId String api key
-     * @return instance of {@link FourDayResponse}
+     * @return instance of {@link FiveDayResponse}
      */
     @GET("forecast")
-    Single<FourDayResponse> getFiveDaysWeather(
+    Single<FiveDayResponse> getFiveDaysWeather(
             @Query("q") String q,
             @Query("units") String units,
             @Query("lang") String lang,

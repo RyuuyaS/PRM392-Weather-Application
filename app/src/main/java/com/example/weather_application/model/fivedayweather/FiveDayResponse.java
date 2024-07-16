@@ -1,10 +1,10 @@
-package com.example.weather_application.model.fourdayweather;
+package com.example.weather_application.model.fivedayweather;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class FourDayResponse {
+public class FiveDayResponse {
 
   @SerializedName("city")
   private City city;

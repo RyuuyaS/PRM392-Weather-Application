@@ -1,4 +1,4 @@
-package com.example.weather_application.model.fourdayweather;
+package com.example.weather_application.model.fivedayweather;
 
 import com.example.weather_application.model.common.Coord;
 import com.google.gson.annotations.SerializedName;
