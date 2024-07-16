@@ -7,6 +7,8 @@ public class Clouds {
   @SerializedName("all")
   private int all;
 
+  private int cloudQuantity;
+
   public int getAll() {
     return all;
   }
