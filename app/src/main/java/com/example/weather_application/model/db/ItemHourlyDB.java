@@ -23,7 +23,7 @@ import io.objectbox.annotation.Id;
 public class ItemHourlyDB extends AbstractItem<ItemHourlyDB, ItemHourlyDB.MyViewHolder> {
   @Id
   private long id;
-  private long fourdays;
+  private long fiveDayWeatherId;
   private int dt;
   private double temp;
   private int weatherCode;
