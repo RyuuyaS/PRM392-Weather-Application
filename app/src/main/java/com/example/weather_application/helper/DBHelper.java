@@ -10,8 +10,6 @@ import android.widget.Toast;
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "favorites.db";
     private static final int DATABASE_VERSION = 1;
-private static final String DATABASE_USERNAME="giangpt";
-private static final String DATABASE_PASSWORD="123";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
