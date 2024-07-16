@@ -21,8 +21,6 @@ public class City {
   @SerializedName("population")
   private int population;
 
-  private boolean isExists;
-
   public String getCountry() {
     return country;
   }
