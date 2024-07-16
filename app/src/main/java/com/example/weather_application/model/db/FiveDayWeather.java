@@ -37,9 +37,6 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
   private int weatherId;
   private long timestampStart;
   private long timestampEnd;
-
-  private long tempUnused;
-
   private @ColorInt
   int color;
   private @ColorInt
