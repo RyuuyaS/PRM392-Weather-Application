@@ -20,9 +20,6 @@ public class City {
   @SerializedName("population")
   private int population;
 
-  @SerializedName("weatherInfo")
-  private int weatherInfo;
-
   public String getCountry() {
     return country;
   }
