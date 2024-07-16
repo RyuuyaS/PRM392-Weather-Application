@@ -174,7 +174,31 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void initSearchView() {
+        binding.toolbarLayout.searchView.setVoiceSearch(false);
+        binding.toolbarLayout.searchView.setHint(getString(R.string.search_label));
+        binding.toolbarLayout.searchView.setCursorDrawable(R.drawable.custom_curosr);
+        binding.toolbarLayout.searchView.setEllipsize(true);
+        binding.toolbarLayout.searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                requestWeather(query, true);
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        binding.toolbarLayout.searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.toolbarLayout.searchView.showSearch();
+            }
+        });
+
+    }
 
     private void initValues() {
         colors = getResources().getIntArray(R.array.mdcolor_500);
