@@ -1,4 +1,4 @@
-package com.example.weather_application.model.fivedayweather;
+package com.example.weather_application.model.fourdayweather;
 
 import com.example.weather_application.model.common.Clouds;
 import com.example.weather_application.model.common.WeatherItem;

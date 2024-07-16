@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.weather_application.databinding.ActivityHourlyBinding;
-import com.example.weather_application.model.db.FiveDayWeather;
+import com.example.weather_application.model.db.FourDayWeather;
 import com.example.weather_application.model.db.ItemHourlyDB;
 import com.example.weather_application.utils.AppUtil;
 import com.example.weather_application.utils.Constants;
@@ -39,7 +39,7 @@ import io.objectbox.reactive.DataObserver;
 public class HourlyActivity extends BaseActivity {
     private FastAdapter<ItemHourlyDB> mFastAdapter;
     private ItemAdapter<ItemHourlyDB> mItemAdapter;
-    private FiveDayWeather fiveDayWeather;
+    private FourDayWeather fourDayWeather;
     private Box<ItemHourlyDB> itemHourlyDBBox;
     private Typeface typeface;
     private ActivityHourlyBinding binding;
@@ -73,31 +73,31 @@ public class HourlyActivity extends BaseActivity {
 
     private void setVariables() {
         Intent intent = getIntent();
-        fiveDayWeather = intent.getParcelableExtra(Constants.FIVE_DAY_WEATHER_ITEM);
+        fourDayWeather = intent.getParcelableExtra(Constants.FIVE_DAY_WEATHER_ITEM);
         BoxStore boxStore = MyApplication.getBoxStore();
         itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
-        binding.cardView.setCardBackgroundColor(fiveDayWeather.getColor());
+        binding.cardView.setCardBackgroundColor(fourDayWeather.getColor());
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        calendar.setTimeInMillis(fiveDayWeather.getDt() * 1000L);
+        calendar.setTimeInMillis(fourDayWeather.getDt() * 1000L);
         String currentLanguage = MyApplication.localeManager.getLanguage();
         if (AppUtil.isRTL(this) || currentLanguage.equals("vi")) {
             binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
         } else {
             binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
         }
-        if (fiveDayWeather.getMaxTemp() < 0 && fiveDayWeather.getMaxTemp() > -0.5) {
-            fiveDayWeather.setMaxTemp(0);
+        if (fourDayWeather.getMaxTemp() < 0 && fourDayWeather.getMaxTemp() > -0.5) {
+            fourDayWeather.setMaxTemp(0);
         }
-        if (fiveDayWeather.getMinTemp() < 0 && fiveDayWeather.getMinTemp() > -0.5) {
-            fiveDayWeather.setMinTemp(0);
+        if (fourDayWeather.getMinTemp() < 0 && fourDayWeather.getMinTemp() > -0.5) {
+            fourDayWeather.setMinTemp(0);
         }
-        if (fiveDayWeather.getTemp() < 0 && fiveDayWeather.getTemp() > -0.5) {
-            fiveDayWeather.setTemp(0);
+        if (fourDayWeather.getTemp() < 0 && fourDayWeather.getTemp() > -0.5) {
+            fourDayWeather.setTemp(0);
         }
-        binding.tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getTemp()));
-        binding.minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getMinTemp()));
-        binding.maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getMaxTemp()));
-        binding.animationView.setAnimation(AppUtil.getWeatherAnimation(fiveDayWeather.getWeatherId()));
+        binding.tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fourDayWeather.getTemp()));
+        binding.minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fourDayWeather.getMinTemp()));
+        binding.maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fourDayWeather.getMaxTemp()));
+        binding.animationView.setAnimation(AppUtil.getWeatherAnimation(fourDayWeather.getWeatherId()));
         binding.animationView.playAnimation();
         //typeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
     }
@@ -113,7 +113,7 @@ public class HourlyActivity extends BaseActivity {
     }
 
     private void showItemHourlyDB() {
-        Query<ItemHourlyDB> query = DbUtil.getItemHourlyDBQuery(itemHourlyDBBox, fiveDayWeather.getId());
+        Query<ItemHourlyDB> query = DbUtil.getItemHourlyDBQuery(itemHourlyDBBox, fourDayWeather.getId());
         query.subscribe().on(AndroidScheduler.mainThread())
                 .observer(new DataObserver<List<ItemHourlyDB>>() {
                     @Override

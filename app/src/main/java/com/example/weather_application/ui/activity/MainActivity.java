@@ -1,7 +1,5 @@
 package com.example.weather_application.ui.activity;
 
-import static android.content.ContentValues.TAG;
-
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
 import android.Manifest;
@@ -13,9 +11,9 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 
+import com.example.weather_application.model.db.FourDayWeather;
 import com.google.android.gms.location.LocationRequest;
 
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,10 +40,9 @@ import com.example.weather_application.model.currentweather.CurrentWeatherRespon
 import com.example.weather_application.model.daysweather.ListItem;
 import com.example.weather_application.model.daysweather.MultipleDaysWeatherResponse;
 import com.example.weather_application.model.db.CurrentWeather;
-import com.example.weather_application.model.db.FiveDayWeather;
 import com.example.weather_application.model.db.ItemHourlyDB;
-import com.example.weather_application.model.fivedayweather.FiveDayResponse;
-import com.example.weather_application.model.fivedayweather.ItemHourly;
+import com.example.weather_application.model.fourdayweather.FourDayResponse;
+import com.example.weather_application.model.fourdayweather.ItemHourly;
 import com.example.weather_application.service.ApiService;
 import com.example.weather_application.ui.fragment.AboutFragment;
 import com.example.weather_application.ui.fragment.MultipleDaysFragment;
@@ -92,16 +89,16 @@ import retrofit2.HttpException;
 
 public class MainActivity extends BaseActivity {
 
-    private FastAdapter<FiveDayWeather> mFastAdapter;
-    private ItemAdapter<FiveDayWeather> mItemAdapter;
+    private FastAdapter<FourDayWeather> mFastAdapter;
+    private ItemAdapter<FourDayWeather> mItemAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private String defaultLang = "en";
-    private List<FiveDayWeather> fiveDayWeathers;
+    private List<FourDayWeather> fourDayWeathers;
     private ApiService apiService;
-    private FiveDayWeather todayFiveDayWeather;
+    private FourDayWeather todayFourDayWeather;
     private Prefser prefser;
     private Box<CurrentWeather> currentWeatherBox;
-    private Box<FiveDayWeather> fiveDayWeatherBox;
+    private Box<FourDayWeather> fiveDayWeatherBox;
     private Box<ItemHourlyDB> itemHourlyDBBox;
     private DataSubscriptionList subscriptions = new DataSubscriptionList();
     private boolean isLoad = false;
@@ -207,7 +204,7 @@ public class MainActivity extends BaseActivity {
         apiService = ApiClient.getClient().create(ApiService.class);
         BoxStore boxStore = MyApplication.getBoxStore();
         currentWeatherBox = boxStore.boxFor(CurrentWeather.class);
-        fiveDayWeatherBox = boxStore.boxFor(FiveDayWeather.class);
+        fiveDayWeatherBox = boxStore.boxFor(FourDayWeather.class);
         itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
         binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -256,9 +253,9 @@ public class MainActivity extends BaseActivity {
         binding.contentMainLayout.todayMaterialCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (todayFiveDayWeather != null) {
+                if (todayFourDayWeather != null) {
                     Intent intent = new Intent(MainActivity.this, HourlyActivity.class);
-                    intent.putExtra(Constants.FIVE_DAY_WEATHER_ITEM, todayFiveDayWeather);
+                    intent.putExtra(Constants.FIVE_DAY_WEATHER_ITEM, todayFourDayWeather);
                     startActivity(intent);
                 }
             }
@@ -303,9 +300,9 @@ public class MainActivity extends BaseActivity {
         binding.contentMainLayout.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.contentMainLayout.recyclerView.setAdapter(mFastAdapter);
         binding.contentMainLayout.recyclerView.setFocusable(false);
-        mFastAdapter.withOnClickListener(new OnClickListener<FiveDayWeather>() {
+        mFastAdapter.withOnClickListener(new OnClickListener<FourDayWeather>() {
             @Override
-            public boolean onClick(@Nullable View v, @NonNull IAdapter<FiveDayWeather> adapter, @NonNull FiveDayWeather item, int position) {
+            public boolean onClick(@Nullable View v, @NonNull IAdapter<FourDayWeather> adapter, @NonNull FourDayWeather item, int position) {
                 Intent intent = new Intent(MainActivity.this, HourlyActivity.class);
                 intent.putExtra(Constants.FIVE_DAY_WEATHER_ITEM, item);
                 startActivity(intent);
@@ -342,13 +339,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showStoredFiveDayWeather() {
-        Query<FiveDayWeather> query = DbUtil.getFiveDayWeatherQuery(fiveDayWeatherBox);
+        Query<FourDayWeather> query = DbUtil.getFiveDayWeatherQuery(fiveDayWeatherBox);
         query.subscribe(subscriptions).on(AndroidScheduler.mainThread())
-                .observer(new DataObserver<List<FiveDayWeather>>() {
+                .observer(new DataObserver<List<FourDayWeather>>() {
                     @Override
-                    public void onData(@NonNull List<FiveDayWeather> data) {
+                    public void onData(@NonNull List<FourDayWeather> data) {
                         if (data.size() > 0) {
-                            todayFiveDayWeather = data.remove(0);
+                            todayFourDayWeather = data.remove(0);
                             mItemAdapter.clear();
                             mItemAdapter.add(data);
                         }
@@ -597,7 +594,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void handleFiveDayResponse(MultipleDaysWeatherResponse response, String cityName) {
-        fiveDayWeathers = new ArrayList<>();
+        fourDayWeathers = new ArrayList<>();
         List<ListItem> list = response.getList();
         int day = 0;
         for (ListItem item : list) {
@@ -605,17 +602,17 @@ public class MainActivity extends BaseActivity {
             int colorAlpha = colorsAlpha[day];
             Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
             Calendar newCalendar = AppUtil.addDays(calendar, day);
-            FiveDayWeather fiveDayWeather = new FiveDayWeather();
-            fiveDayWeather.setWeatherId(item.getWeather().get(0).getId());
-            fiveDayWeather.setDt(item.getDt());
-            fiveDayWeather.setMaxTemp(item.getTemp().getMax());
-            fiveDayWeather.setMinTemp(item.getTemp().getMin());
-            fiveDayWeather.setTemp(item.getTemp().getDay());
-            fiveDayWeather.setColor(color);
-            fiveDayWeather.setColorAlpha(colorAlpha);
-            fiveDayWeather.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
-            fiveDayWeather.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
-            fiveDayWeathers.add(fiveDayWeather);
+            FourDayWeather fourDayWeather = new FourDayWeather();
+            fourDayWeather.setWeatherId(item.getWeather().get(0).getId());
+            fourDayWeather.setDt(item.getDt());
+            fourDayWeather.setMaxTemp(item.getTemp().getMax());
+            fourDayWeather.setMinTemp(item.getTemp().getMin());
+            fourDayWeather.setTemp(item.getTemp().getDay());
+            fourDayWeather.setColor(color);
+            fourDayWeather.setColorAlpha(colorAlpha);
+            fourDayWeather.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
+            fourDayWeather.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
+            fourDayWeathers.add(fourDayWeather);
             day++;
         }
         getFiveDaysHourlyWeather(cityName);
@@ -627,9 +624,9 @@ public class MainActivity extends BaseActivity {
                                 cityName, Constants.UNITS, defaultLang, apiKey)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new DisposableSingleObserver<FiveDayResponse>() {
+                        .subscribeWith(new DisposableSingleObserver<FourDayResponse>() {
                             @Override
-                            public void onSuccess(FiveDayResponse response) {
+                            public void onSuccess(FourDayResponse response) {
                                 handleFiveDayHourlyResponse(response);
                             }
 
@@ -642,23 +639,23 @@ public class MainActivity extends BaseActivity {
         );
     }
 
-    private void handleFiveDayHourlyResponse(FiveDayResponse response) {
+    private void handleFiveDayHourlyResponse(FourDayResponse response) {
         if (!fiveDayWeatherBox.isEmpty()) {
             fiveDayWeatherBox.removeAll();
         }
         if (!itemHourlyDBBox.isEmpty()) {
             itemHourlyDBBox.removeAll();
         }
-        for (FiveDayWeather fiveDayWeather : fiveDayWeathers) {
-            long fiveDayWeatherId = fiveDayWeatherBox.put(fiveDayWeather);
+        for (FourDayWeather fourDayWeather : fourDayWeathers) {
+            long fiveDayWeatherId = fiveDayWeatherBox.put(fourDayWeather);
             ArrayList<ItemHourly> listItemHourlies = new ArrayList<>(response.getList());
             for (ItemHourly itemHourly : listItemHourlies) {
                 Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
                 calendar.setTimeInMillis(itemHourly.getDt() * 1000L);
                 if (calendar.getTimeInMillis()
-                        <= fiveDayWeather.getTimestampEnd()
+                        <= fourDayWeather.getTimestampEnd()
                         && calendar.getTimeInMillis()
-                        > fiveDayWeather.getTimestampStart()) {
+                        > fourDayWeather.getTimestampStart()) {
                     ItemHourlyDB itemHourlyDB = new ItemHourlyDB();
                     itemHourlyDB.setDt(itemHourly.getDt());
                     itemHourlyDB.setFiveDayWeatherId(fiveDayWeatherId);

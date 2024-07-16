@@ -2,12 +2,10 @@ package com.example.weather_application.utils;
 
 import com.example.weather_application.model.CityInfo;
 import com.example.weather_application.model.db.CurrentWeather;
-import com.example.weather_application.model.db.FiveDayWeather;
+import com.example.weather_application.model.db.FourDayWeather;
 import com.example.weather_application.model.db.ItemHourlyDB;
 import com.example.weather_application.model.db.ItemHourlyDB_;
 import com.example.weather_application.model.db.MultipleDaysWeather;
-
-import java.util.List;
 
 import io.objectbox.Box;
 import io.objectbox.query.Query;
@@ -37,10 +35,10 @@ public class DbUtil {
   /**
    * Get query of fiveDayWeatherBox
    *
-   * @param fiveDayWeatherBox instance of {@link Box<FiveDayWeather>}
-   * @return instance of {@link Query<FiveDayWeather>}
+   * @param fiveDayWeatherBox instance of {@link Box< FourDayWeather >}
+   * @return instance of {@link Query< FourDayWeather >}
    */
-  public static Query<FiveDayWeather> getFiveDayWeatherQuery(Box<FiveDayWeather> fiveDayWeatherBox) {
+  public static Query<FourDayWeather> getFiveDayWeatherQuery(Box<FourDayWeather> fiveDayWeatherBox) {
     return fiveDayWeatherBox.query().build();
   }
 

@@ -27,7 +27,7 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.MyViewHolder> implements Parcelable {
+public class FourDayWeather extends AbstractItem<FourDayWeather, FourDayWeather.MyViewHolder> implements Parcelable {
   @Id
   private long id;
   private int dt;
@@ -138,7 +138,7 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
     return R.layout.weather_day_item;
   }
 
-  protected static class MyViewHolder extends FastAdapter.ViewHolder<FiveDayWeather> {
+  protected static class MyViewHolder extends FastAdapter.ViewHolder<FourDayWeather> {
     Context context;
     WeatherDayItemBinding binding;
 
@@ -149,7 +149,7 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
     }
 
     @Override
-    public void bindView(@NonNull FiveDayWeather item, @NonNull List<Object> payloads) {
+    public void bindView(@NonNull FourDayWeather item, @NonNull List<Object> payloads) {
       binding.cardView.setCardBackgroundColor(item.getColor());
       int[] colors = {
           Color.TRANSPARENT,
@@ -183,28 +183,28 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
     }
 
     @Override
-    public void unbindView(@NonNull FiveDayWeather item) {
+    public void unbindView(@NonNull FourDayWeather item) {
 
     }
 
   }
 
-  public static final Creator<FiveDayWeather> CREATOR = new Creator<FiveDayWeather>() {
+  public static final Creator<FourDayWeather> CREATOR = new Creator<FourDayWeather>() {
     @Override
-    public FiveDayWeather createFromParcel(Parcel source) {
-      return new FiveDayWeather(source);
+    public FourDayWeather createFromParcel(Parcel source) {
+      return new FourDayWeather(source);
     }
 
     @Override
-    public FiveDayWeather[] newArray(int size) {
-      return new FiveDayWeather[size];
+    public FourDayWeather[] newArray(int size) {
+      return new FourDayWeather[size];
     }
   };
 
-  public FiveDayWeather() {
+  public FourDayWeather() {
   }
 
-  protected FiveDayWeather(Parcel in) {
+  protected FourDayWeather(Parcel in) {
     this.id = in.readLong();
     this.dt = in.readInt();
     this.temp = in.readDouble();
