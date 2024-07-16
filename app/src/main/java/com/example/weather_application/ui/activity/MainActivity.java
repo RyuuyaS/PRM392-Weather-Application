@@ -542,12 +542,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void hideEmptyLayout() {
-        binding.contentEmptyLayout.emptyLayout.setVisibility(View.GONE);
-        binding.contentMainLayout.nestedScrollView.setVisibility(View.VISIBLE);
-    }
-
-
     private void storeCurrentWeather(CurrentWeatherResponse response) {
         CurrentWeather currentWeather = new CurrentWeather();
         currentWeather.setTemp(response.getMain().getTemp());
