@@ -45,16 +45,6 @@ public class DbUtil {
   }
 
   /**
-   * Get query of fiveDayWeatherBox
-   *
-   * @param fiveDayWeatherBox instance of {@link Box<FiveDayWeather>}
-   * @return instance of {@link Query<FiveDayWeather>}
-   */
-  public static Query<FiveDayWeather> getFiveDayWeatherQueryFixed(Box<FiveDayWeather> fiveDayWeatherBox) {
-    return fiveDayWeatherBox.query().build();
-  }
-
-  /**
    * Get query of itemHourlyDBBox according to fiveDayWeatherId value
    *
    * @param itemHourlyDBBox  instance of {@link Box<ItemHourlyDB>}
