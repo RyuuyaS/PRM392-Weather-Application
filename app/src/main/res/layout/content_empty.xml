@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:visibility="gone">
 
+    <!-- Search Text View -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/search_text_view"
         android:layout_width="wrap_content"
@@ -15,6 +16,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textStyle="bold|italic" />
 
+    <!-- No City Image View -->
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/no_city_image_view"
         android:layout_width="match_parent"
