@@ -535,12 +535,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void showEmptyLayout() {
-        Glide.with(MainActivity.this).load(R.drawable.no_city).into(binding.contentEmptyLayout.noCityImageView);
-        binding.contentEmptyLayout.emptyLayout.setVisibility(View.VISIBLE);
-        binding.contentMainLayout.nestedScrollView.setVisibility(View.GONE);
 
-    }
 
     private void hideEmptyLayout() {
         binding.contentEmptyLayout.emptyLayout.setVisibility(View.GONE);
