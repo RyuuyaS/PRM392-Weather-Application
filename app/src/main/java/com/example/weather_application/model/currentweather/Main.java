@@ -25,8 +25,6 @@ public class Main {
   @SerializedName("temp_max")
   private double tempMax;
 
-private int avgTemp;
-
   public double getTemp() {
     return temp;
   }
