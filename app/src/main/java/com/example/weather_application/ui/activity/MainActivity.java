@@ -564,7 +564,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
+    private void storeCityInfo(CurrentWeatherResponse response) {
+        CityInfo cityInfo = new CityInfo();
+        cityInfo.setCountry(response.getSys().getCountry());
+        cityInfo.setId(response.getId());
+        cityInfo.setName(response.getName());
+        prefser.put(Constants.CITY_INFO, cityInfo);
+        binding.toolbarLayout.cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+    }
 
     private void getFiveDaysWeather(String cityName) {
         disposable.add(
